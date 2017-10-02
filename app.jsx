@@ -212,10 +212,7 @@ var Application = React.createClass({
   componentDidMount: function() {
     axios.get('mock/players.json')
       .then(function(response) {
-        var playersData = response.data;
-        this.setState({players: playersData});
-
-
+        this.setState({players: response.data});
       }.bind(this))
       .catch(function(error) {
         console.log("Error Loading Players");
