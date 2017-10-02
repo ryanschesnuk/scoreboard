@@ -1,20 +1,20 @@
-var PLAYERS = [
-  {
-    name: "Jean Chretien",
-    score: 31,
-    id: 1,
-  },
-  {
-    name: "Meg Energy",
-    score: 33,
-    id: 2,
-  },
-  {
-    name: "Auntie Histamine",
-    score: 25,
-    id: 3,
-  }
-]
+// var PLAYERS = [
+//   {
+//     name: "Jean Chretien",
+//     score: 31,
+//     id: 1,
+//   },
+//   {
+//     name: "Meg Energy",
+//     score: 33,
+//     id: 2,
+//   },
+//   {
+//     name: "Auntie Histamine",
+//     score: 25,
+//     id: 3,
+//   }
+// ]
 
 var nextId = 4;
 
@@ -197,11 +197,11 @@ Player.proptypes = {
 var Application = React.createClass({
   propTypes : {
     title: React.PropTypes.string,
-    initialPlayers: React.PropTypes.arrayOf(React.PropTypes.shape({
-      name: React.PropTypes.string.isRequired,
-      score: React.PropTypes.number.isRequired,
-      id: React.PropTypes.number.isRequired,
-    })).isRequired
+    // initialPlayers: React.PropTypes.arrayOf(React.PropTypes.shape({
+    //   name: React.PropTypes.string.isRequired,
+    //   score: React.PropTypes.number.isRequired,
+    //   id: React.PropTypes.number.isRequired,
+    // })).isRequired
   },
   getDefaultProps: function() {
     return {
@@ -209,10 +209,23 @@ var Application = React.createClass({
     };
   },
 
+  componentDidMount: function() {
+    axios.get('mock/players.json')
+      .then(function(response) {
+        // console.log(response.data);
+        var playersData = response.data;
+        console.log(playersData)
+        this.setState({players: playersData});
+
+
+      }.bind(this));
+  },
+
   getInitialState: function() {
-    return {
-      players: this.props.initialPlayers,
-    };
+
+      return {
+        players: [],
+      };
   },
 
   onScoreChange: function(index, delta) {
@@ -260,4 +273,4 @@ var Application = React.createClass({
   }
 });
 
-ReactDOM.render(<Application initialPlayers={PLAYERS} />, document.getElementById('container'));
+ReactDOM.render(<Application />, document.getElementById('container'));
